@@ -21,8 +21,6 @@ public:
 
     inline void setVardas(const std::string& v) { vardas_ = v; }
     inline void setPavarde(const std::string& p) { pavarde_ = p; }
-
-    // ABSTRACT PRINT METHOD
     virtual void spausdinti(std::ostream& os) const = 0;
 };
 

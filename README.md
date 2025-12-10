@@ -76,6 +76,8 @@ ctest --test-dir build --output-on-failure
 Arba:
 ./build/tests
 
+<img width="743" height="503" alt="Screenshot 2025-12-10 at 13 51 33" src="https://github.com/user-attachments/assets/0bf85dd3-3ba0-4a79-ac8f-00db01dc57ec" />
+
 5. Dokumentacija (Doxygen)
 Doxygen HTML dokumentacija yra:
 docs/html/index.html
@@ -85,6 +87,12 @@ doxygen Doxyfile
 
 Atidaryti dokumentaciją macOS:
 open docs/html/index.html
+
+
+
+<img width="1428" height="895" alt="Screenshot 2025-12-10 at 14 12 19" src="https://github.com/user-attachments/assets/5ff137ee-f014-45e6-b2a6-a96100d0f366" />
+
+
 
 6. Našumo matavimai
 Programa pateikia laikus:

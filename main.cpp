@@ -1,9 +1,21 @@
+/**
+ * @file main.cpp
+ * @ingroup app
+ * @brief CLI programa: duomenų generavimas/nuskaitymas, rikiavimas ir skirstymas, laiko matavimai.
+ *
+ * Vartotojas renkasi: failo režimą, skaičiavimo strategiją (vidurkis/mediana),
+ * konteinerį (vector/list), rikiavimo kriterijų, skirstymo strategiją.
+ */
+
 #include "studentas.h"
 #include <filesystem>
 #include <list>
 #include <vector>
 #include <iomanip>
-#include "studentas.h"
+#include <chrono>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -22,13 +34,16 @@ int main() {
     std::srand(static_cast<unsigned>(time(nullptr)));
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-
+    
+    using std::cout;
+    using std::cin;
+    
     cout << "Pasirinkite režimą:\n"
          << "1) Generuoti naują failą\n"
          << "2) Naudoti esamą failą\n"
          << "3) Įvesti duomenis ranka\n";
     int rez;
-    cin >> rez;
+    if (!(cin >> rez)) return 0;
 
     std::string failas;
     int kiek = 0;
@@ -124,18 +139,26 @@ int main() {
     int strategija;
     cin >> strategija;
      {
+        std::cout << "Rule of Three demonstracija (v2.0):\n";
         Studentas a;
         a.setVardas("Testas");
         a.setPavarde("Kopijavimas");
+        a.setNd({10,9,8,7,6});
+        a.setEgzaminas(9);
+        a.perskaiciuoti(vidurkis);
 
         Studentas b = a;
-        Studentas c;
-        c = a;
+        Studentas c; c = a;
         std::cout << "Rule of Three test:\n";
         std::cout << b.vardas() << " " << b.pavarde() << "\n";
         std::cout << c.vardas() << " " << c.pavarde() << "\n";
     }
-
+        std::vector<Studentas> demo;
+        demo.reserve(1000);
+        for (int i = 0; i < 500; ++i) {
+            demo.push_back(a); 
+        }
+    }
     auto t_total0 = std::chrono::high_resolution_clock::now();
 
     if (kon == 1) {
@@ -223,6 +246,6 @@ int main() {
              << "total = " << std::chrono::duration<double>(t_total1 - t_total0).count() << " s\n";
     }
 
-    cout << "\nRezultatai įrašyti į 'results/'.\n";
+    std::cout << "\nRezultatai įrašyti į 'results/'.\n";
     return 0;
 }

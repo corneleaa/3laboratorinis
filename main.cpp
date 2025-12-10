@@ -17,8 +17,6 @@
 #include <fstream>
 #include <algorithm>
 
-using namespace std;
-
 static std::string rastiFaila(const std::string& failas) {
     namespace fs = std::filesystem;
     fs::path p = fs::current_path() / failas;
@@ -111,7 +109,7 @@ int main() {
             std::cerr << "Nepavyko rasti failo: " << failas << "\n";
             return 1;
         }
-        cout << " Naudojamas failas: " << tikras << "\n";
+        cout << "Naudojamas failas: " << tikras << "\n";
         failas = tikras;
     }
 
@@ -136,30 +134,34 @@ int main() {
             "1) Kopijuoti į du naujus (A+B)\n"
             "2) Tik vargšiukai (ištrinti iš bendro)\n"
             "3) Optimizuota greičiausia\n";
-    int strategija;
-    cin >> strategija;
-     {
-        std::cout << "Rule of Three demonstracija (v2.0):\n";
-        Studentas a;
-        a.setVardas("Testas");
-        a.setPavarde("Kopijavimas");
-        a.setNd({10,9,8,7,6});
-        a.setEgzaminas(9);
-        a.perskaiciuoti(vidurkis);
+int strategija;
+cin >> strategija;
+{
+    std::cout << "Rule of Three demonstracija (v2.0):\n";
 
-        Studentas b = a;
-        Studentas c; c = a;
-        std::cout << "Rule of Three test:\n";
-        std::cout << b.vardas() << " " << b.pavarde() << "\n";
-        std::cout << c.vardas() << " " << c.pavarde() << "\n";
+    Studentas a;
+    a.setVardas("Testas");
+    a.setPavarde("Kopijavimas");
+    a.setNd({10,9,8,7,6});
+    a.setEgzaminas(9);
+    a.perskaiciuoti(vidurkis);
+    
+    Studentas b = a;
+    Studentas c; 
+    c = a;
+
+    std::cout << "Rule of Three test:\n";
+    std::cout << b.vardas() << " " << b.pavarde() << "\n";
+    std::cout << c.vardas() << " " << c.pavarde() << "\n";
+
+    std::vector<Studentas> demo;
+    demo.reserve(1000);
+    for (int i = 0; i < 500; ++i) {
+        demo.push_back(a); 
     }
-        std::vector<Studentas> demo;
-        demo.reserve(1000);
-        for (int i = 0; i < 500; ++i) {
-            demo.push_back(a); 
-        }
-    }
-    auto t_total0 = std::chrono::high_resolution_clock::now();
+} 
+
+auto t_total0 = std::chrono::high_resolution_clock::now();
 
     if (kon == 1) {
         auto t_r0 = std::chrono::high_resolution_clock::now();

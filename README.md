@@ -76,7 +76,8 @@ ctest --test-dir build --output-on-failure
 Arba:
 ./build/tests
 
-<img width="743" height="503" alt="Screenshot 2025-12-10 at 13 51 33" src="https://github.com/user-attachments/assets/0bf85dd3-3ba0-4a79-ac8f-00db01dc57ec" />
+<img width="842" height="611" alt="Screenshot 2025-12-10 at 15 47 59" src="https://github.com/user-attachments/assets/60015b71-3c74-4755-ae67-677a6d03367f" />
+
 
 5. Dokumentacija (Doxygen)
 Doxygen HTML dokumentacija yra:

@@ -1,10 +1,23 @@
+/**
+ * @file studentas.cpp
+ * @brief Įgyvendinimas: Studentas, matematinės funkcijos, I/O, rikiavimai ir skirstymo strategijos.
+ */
+
 #include "studentas.h"
 #include <cstdlib>
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
+#include <iterator>
+#include <list>
+#include <cmath>
 #include <fstream>
 #include <sstream>
+std::atomic<unsigned long long> Studentas::g_next_id_{0};
+
+/*
+ *  Pagalbinės funkcijos: vidurkis / mediana
+ * */
 
 Studentas::Studentas() : Zmogus(), egzaminas_(0), galutinis_(0.0) {}
    // std::cout << "[Default ctor] Sukurtas objektas: " << this << std::endl;
@@ -14,9 +27,13 @@ Studentas::Studentas(const Studentas& other)
       nd_(other.nd_),
       egzaminas_(other.egzaminas_),
       galutinis_(other.galutinis_) {
-          //  std::cout << "[Copy assignment] Priskiriama iš "
-  //            << &other << " į " << this << std::endl;
-      }
+    init_copied_from_(other);
+#ifdef RULEOFTHREE_DEBUG
+    std::cout << "[RuleOfThree] CopyCtor: id=" << id_ << ", gen=" << gen_
+              << ", this=" << this << " <- from=" << &other << "\n";
+#endif
+}
+
 
 
 Studentas& Studentas::operator=(const Studentas& other)
@@ -118,12 +135,11 @@ void isvestiStudentus(const std::vector<Studentas>& gr, const std::string& faila
 }
 
 Studentas generuotiStudenta(int id) {
-    Studentas s;
-    s.setVardas("Vardas" + std::to_string(id));
-    s.setPavarde("Pavarde" + std::to_string(id));
+    Studentas s("Vardas" + std::to_string(id),
+                "Pavarde" + std::to_string(id),
+                /*nd*/{}, /*egz*/0);
     std::vector<int> nd(5);
-    nd.reserve(5);
-    for (int i = 0; i < 5; ++i)  nd[i] = 1 + std::rand() % 10;
+    for (int i = 0; i < 5; ++i) nd[i] = 1 + std::rand() % 10;
     s.setNd(nd);
     s.setEgzaminas(1 + std::rand() % 10);
     s.perskaiciuoti(vidurkis);
@@ -134,10 +150,13 @@ void generuotiFaila(const std::string& failoVardas, int kiek) {
     std::ofstream out(failoVardas);
     out << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 Egzaminas\n";
     for (int i = 1; i <= kiek; ++i) {
-        Studentas s = generuotiStudenta(i);
-        out << s.vardas() << " " << s.pavarde() << " ";
-        for (int j = 0; j < 5; ++j) out << (std::rand() % 10 + 1) << " ";
-        out << (std::rand() % 10 + 1) << "\n";
+        std::vector<int> nd(5);
+        for (int j = 0; j < 5; ++j) nd[j] = (std::rand() % 10 + 1);
+        int egz = (std::rand() % 10 + 1);
+        out << "Vardas" << i << ' '
+            << "Pavarde" << i << ' '
+            << nd[0] << ' ' << nd[1] << ' ' << nd[2] << ' ' << nd[3] << ' ' << nd[4] << ' '
+            << egz << '\n';
     }
 }
 

@@ -1,64 +1,39 @@
-/// @file zmogus.h
-/// @brief Abstrakti bazinė klasė asmeniui su vardu ir pavarde.
-/// @ingroup core
-
-#ifndef ZMOGUS_H
-#define ZMOGUS_H
-
+#pragma once
 #include <string>
-#include <iostream>
-#include <iomanip>
+#include <utility>
+
 /**
- * @defgroup core Pagrindinės klasės
- * @brief Zmogus ir Studentas, jų API ir kontraktai.
+ * @file zmogus.h
+ * @ingroup model
+ * @brief Bazinė klasė bendriems laukams (vardas, pavardė).
  */
 
 /**
  * @class Zmogus
- * @ingroup core
- * @brief Abstrakti bazinė klasė asmeniui su vardu ir pavarde.
- *
- * Klasė skirta paveldėjimui. Privaloma perrašyti @ref spausdinti.
+ * @brief Bazinė abstrakcija su vardu ir pavarde.
  */
 class Zmogus {
 protected:
-    std::string vardas_;   /**< @brief Vardas */
-    std::string pavarde_;  /**< @brief Pavardė */
+    std::string vardas_;   /**< Vardas */
+    std::string pavarde_;  /**< Pavardė */
 public:
-    /// @name Konstruktoriai / destruktorius
-    ///@{
-    /// Tuščias konstruktorius.
-    Zmogus() : vardas_(""), pavarde_("") {}
-    /// Konstruktorius su reikšmėmis.
-    /// @param v vardas
-    /// @param p pavardė
-    Zmogus(const std::string& v, const std::string& p) : vardas_(v), pavarde_(p) {}
-
-    virtual ~Zmogus() = default;
-    ///@}
-
-    /// @name Get’ai ir set’ai
-    ///@{
-    /// @return Vardas
-
-    inline std::string vardas() const { return vardas_; }
-    /// @return Pavardė
-    inline std::string pavarde() const { return pavarde_; }
-    /// Nustato vardą.
-    /// @param v naujas vardas
-
-    inline void setVardas(const std::string& v) { vardas_ = v; }
-    /// Nustato pavardę.
-    /// @param p nauja pavardė
-    inline void setPavarde(const std::string& p) { pavarde_ = p; }
-    ///@}
+    /** @brief Numatytoji konstruktorius. */
+    inline Zmogus() = default;
 
     /**
-     * @brief Abstrakti spausdinimo funkcija.
-     * @param os išvesties srautas
+     * @brief Pilnas konstruktorius.
+     * @param v vardas
+     * @param p pavardė
      */
-    virtual void spausdinti(std::ostream& os) const = 0;
-};
+    inline Zmogus(std::string v, std::string p)
+        : vardas_(std::move(v)), pavarde_(std::move(p)) {}
 
-#endif
+    /** @brief Virtualus destruktorius. */
+    inline virtual ~Zmogus() = default;
+
+    /** @brief Prieiga prie vardo. */
+    inline const std::string& vardas_ref() const { return vardas_; }
+    /** @brief Prieiga prie pavardės. */
+    inline const std::string& pavarde_ref() const { return pavarde_; }
+};
 
